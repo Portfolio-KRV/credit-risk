@@ -1,0 +1,77 @@
+[project]
+name = "credit-risk"
+version = "1.0.0"
+description = "Credit Risk Assessment using Bayesian Networks with Hill-Climbing Structure Learning"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Kevin Reyes" }]
+license = { text = "MIT" }
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+# Runtime dependencies (used by `src/` and the notebooks).
+dependencies = [
+    "numpy>=2.0,<3",
+    "pandas>=2.2,<4",
+    "pgmpy>=1.0,<2",
+    "networkx>=3.0,<4",
+    "matplotlib>=3.8,<4",
+]
+
+[project.optional-dependencies]
+api = [
+    "fastapi>=0.115,<1",
+    "uvicorn[standard]>=0.30,<1",
+    "pydantic>=2.8,<3",
+    "slowapi>=0.1.9,<1",
+]
+notebook = [
+    "jupyter>=1.0",
+    "ipykernel>=6.0",
+    "ipywidgets>=8.0",
+]
+dev = [
+    "pytest>=8.0,<9",
+    "pytest-cov>=4.1,<7",
+    "httpx>=0.27,<1",
+    "ruff>=0.4,<1",
+]
+
+[project.urls]
+Homepage = "https://github.com/Portfolio-KRV/credit-risk"
+Repository = "https://github.com/Portfolio-KRV/credit-risk"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src", "api"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["*.ipynb"]
+force-exclude = true
+exclude = ["venv", ".venv", "venv-test", "venv-test2", "__pycache__", "build", "dist", "outputs", "scripts", "notebooks", "space"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501", "E402", "B008"]  # E501 line-length (formatter); E402 OK for env-vars before imports; B008 OK for FastAPI Depends/File defaults
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
